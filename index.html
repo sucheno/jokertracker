@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joker Card Tracker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #222; /* Dark background color */
+        color: #fff; /* White text color */
+    }
+    .card {
+        display: inline-block;
+        width: 50px;
+        height: 70px;
+        border: 1px solid #fff; /* White border */
+        margin: 5px;
+        cursor: pointer;
+        line-height: 70px;
+        background-color: #fff; /* White background color for cards */
+        color: #000; /* Black text color */
+    }
+    #log {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<h1>Joker Card Tracker</h1>
+<div id="container">
+    <div class="card" onclick="toggleCard('1')">1</div>
+    <div class="card" onclick="toggleCard('2')">2</div>
+    <div class="card" onclick="toggleCard('3')">3</div>
+    <div class="card" onclick="toggleCard('4')">4</div>
+    <div class="card" onclick="toggleCard('5')">5</div>
+    <div class="card" onclick="toggleCard('6')">6</div>
+    <div class="card" onclick="toggleCard('7')">7</div>
+    <div class="card" onclick="toggleCard('8')">8</div>
+    <div class="card" onclick="toggleCard('9')">9</div>
+    <div class="card" onclick="toggleCard('10')">10</div>
+    <div class="card" onclick="toggleCard('J')">J</div>
+    <div class="card" onclick="toggleCard('Q')">Q</div>
+    <div class="card" onclick="toggleCard('K')">K</div>
+    <div class="card" onclick="toggleCard('A')">A</div>
+</div>
+
+<div id="log"></div>
+<button onclick="undo()">Undo</button>
+
+<script>
+    var disappearedCards = [];
+
+    function toggleCard(cardValue) {
+        var card = document.querySelector('[onclick="toggleCard(\'' + cardValue + '\')"]');
+        card.style.visibility = 'hidden';
+        disappearedCards.push(cardValue);
+        updateLog();
+    }
+
+    function updateLog() {
+        var logDiv = document.getElementById('log');
+        logDiv.innerHTML = '<strong>Disappeared Cards:</strong> ' + disappearedCards.join(', ');
+    }
+
+    function undo() {
+        if (disappearedCards.length > 0) {
+            var lastDisappearedCard = disappearedCards.pop();
+            var card = document.querySelector('[onclick="toggleCard(\'' + lastDisappearedCard + '\')"]');
+            card.style.visibility = 'visible';
+            updateLog();
+        } else {
+            alert('No cards to undo.');
+        }
+    }
+</script>
+</body>
+</html>
